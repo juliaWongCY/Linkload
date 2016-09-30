@@ -1,0 +1,44 @@
+Put your answers to each of the following questions in this file.
+You can instead create a file answers.pdf (LaTeX is recommended) that contains your answers to the questions.
+You should submit your answers.txt or answers.pdf file via CATe.
+
+
+Question 1:
+How big (how many bytes) is the program code section of the file hello.o?
+Explain how you arrived at your answer, including any mathematical conversions you had to make.
+
+Answer:
+ 
+ 
+Question 2:
+How many relocation records are there in the file hello.o? 
+Name them and explain how you arrived at your answer.
+
+Answer:
+
+
+Question 3:
+How many relocation records are there in the file hello (the result of linking hello.o)?
+Explain how you arrived at your answer. 
+
+Answer:
+
+
+Question 4:
+What happens if you try to link chello.o using ld as you did with hello.o 
+(that is by running the command: ld -N chello.o -o chello)?
+Explain what has happened and how the nm utility can be used to confirm this.
+
+Answer:
+
+ 
+Question 5:
+The last instruction in hello.s is an exit system call. 
+What would happen if you assembled, linked and ran this programs with this instruction commented out?
+(Hint: you might want to try this)
+Explain why this happens. Does the program still terminate?
+
+Answer:
+
+
+ 
