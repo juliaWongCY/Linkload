@@ -8,6 +8,14 @@ How big (how many bytes) is the program code section of the file hello.o?
 Explain how you arrived at your answer, including any mathematical conversions you had to make.
 
 Answer:
+In hexadecimal, it can represent number from 0 to 15, ie 16 numbers. This means that one hexadecimal digit represents 4 bits (2^4 = 16). Inside the file hello.o, using the objdump utility with the '--disassemble' option, we could visualize the assembler mnemonics that contain instructions.
+As one hexadecimal digit represents 4 bits, a pair represents 8 bits, i.e. 1 byte.
+For each 'mov' instruction, it contains 6 pairs of hexadecimal digits. Therefore 6 bytes each.
+While for each 'int' instruction, it contains 2 pairs of hexadeciaml digits. Hence 2 bytes each.
+There are total 6 'mov' and 2 'int' instructions in hello.o. Therefore the program code section of the file hello.o is 6*6 + 2*2 = 40 bytes.
+
+
+
  
  
 Question 2:
