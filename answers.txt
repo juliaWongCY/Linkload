@@ -27,7 +27,10 @@ Name them and explain how you arrived at your answer.
 
 Answer:
 //TODO:CHECK!!
-Using the objdump utility with the '--all-headers' option, we can see relocation records for the file hello.o. In this case, there is one relocation record that has an offset of '000000000000000b' with type 'R_X86_64_32' and value 'message'
+Firstly, when using the command 'file hello.o', we can see that hello.o is relocatable. This means that it allows executable to hold the right address after linking all the object files during the link time. 
+The relocation depends on the references made to the relocated offset. There are two types of references: an immediate reference and a lazy reference. In hello.s, it is an immediate reference i.e. the relocation must be determined during the process of initialization. Inside the file hello.s, we used labels '_start' and 'message'. When the assembler is writing the binary code, the address of 'message' is known yet. For a relocatable file, the assembler will write the address of the unknown as '0' and make a relocation record for it. After knowing the address for the label, the linker will generate the right address for the label 'message'.
+Therefore, inside the hello.o file, there is only one relocation record. This can be confirmed using the objdump utility with the '--all-headers' option, showing that there is one relocation record that has an offset of '000000000000000b' with type 'R_X86_64_32' and value 'message'.
+
 
 
 
@@ -39,6 +42,12 @@ Explain how you arrived at your answer.
 
 Answer:
 //TODO:CHECK!
+There is no relocation record in the file hello (the result of linking hello.o). Due to the fact that after using the linker, the relocation record we had before is solved. The linker has now produced a single file (the executable file) with a fixed starting address.
+This can be confirmed using the objdump utility with '--all-headers' option, no relocatio records are shown.
+
+
+
+
 
 Question 4:
 What happens if you try to link chello.o using ld as you did with hello.o 
