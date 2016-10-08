@@ -3,6 +3,9 @@ You can instead create a file answers.pdf (LaTeX is recommended) that contains y
 You should submit your answers.txt or answers.pdf file via CATe.
 
 
+
+
+
 Question 1:
 How big (how many bytes) is the program code section of the file hello.o?
 Explain how you arrived at your answer, including any mathematical conversions you had to make.
@@ -23,6 +26,11 @@ How many relocation records are there in the file hello.o?
 Name them and explain how you arrived at your answer.
 
 Answer:
+//TODO:CHECK!!
+Using the objdump utility with the '--all-headers' option, we can see relocation records for the file hello.o. In this case, there is one relocation record that has an offset of '000000000000000b' with type 'R_X86_64_32' and value 'message'
+
+
+
 
 
 Question 3:
@@ -30,7 +38,7 @@ How many relocation records are there in the file hello (the result of linking h
 Explain how you arrived at your answer. 
 
 Answer:
-
+//TODO:CHECK!
 
 Question 4:
 What happens if you try to link chello.o using ld as you did with hello.o 
@@ -38,6 +46,7 @@ What happens if you try to link chello.o using ld as you did with hello.o
 Explain what has happened and how the nm utility can be used to confirm this.
 
 Answer:
+//TODO
 
  
 Question 5:
@@ -47,6 +56,7 @@ What would happen if you assembled, linked and ran this programs with this instr
 Explain why this happens. Does the program still terminate?
 
 Answer:
+//TODO
 
 
  
