@@ -55,9 +55,12 @@ What happens if you try to link chello.o using ld as you did with hello.o
 Explain what has happened and how the nm utility can be used to confirm this.
 
 Answer:
-//TODO
-When we link chello.o using ld, the linker resolved all the relocation records and linked the two files -- chello.o and writeexit.o, producing an executable file (chello).
-When we use the utility nm for chello.o, we can see the labels 'exitA', 'main', 'message' and 'writeA'. While for writeexit.o, there are labels 'exitA', 'main', '_start' and 'writeA'.
+When we try to link the files, we got undefined reference to 'writeA' and 'exitA'/
+This can be confirmed using the utility nm. 
+For chello.o, we can see that 'exitA' and ' WriteA' have undefined type ('U' shown).
+Therefore, when linking the files, it shows that in the function 'main', there's undefined reference to 'writeA' and 'exitA'.
+
+
 
 
 
@@ -69,7 +72,7 @@ What would happen if you assembled, linked and ran this programs with this instr
 Explain why this happens. Does the program still terminate?
 
 Answer:
-//TODO
+When we commented the instruction out, the program still print out 'Hello world!' but it resulted in a segmentation fault and the program terminated. This happened because we commented out the exit system call and so we were trying to access memories that we are not supposed to access, resulting a segmentation fault.
 
 
  
