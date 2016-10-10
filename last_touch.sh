@@ -3,9 +3,13 @@
 #!/bin/bash
 
 # to print out the last commit, use -n 1
+# The %aI shows the UTC time-stamp
+# The %h shows therevision_id
+# The %an shows the author
+
 git=`git ls-files | while read file;\
 do git log -n 1\
-  --pretty="%ad  [%h]:$file     (%an)" -- $file; \
+  --pretty="%aI  [%h]:$file     (%an)" -- $file; \
 done`
 
 echo "$git"
