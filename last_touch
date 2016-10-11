@@ -36,18 +36,27 @@ then
   # The %aI shows the UTC time-stamp
   # The %h shows therevision_id
   # The %an shows the author
-#  echo "This is a correct Directory."
+  # To pad with spaces and left aligned, we use %-5s
+  echo "This is a correct Directory."
 
   pwd
 
-  cd "$(dirname -- "$1")"
+  cd "$1"
+  #cd "$(dirname -- "$1")"
 
   pwd
 
-  git ls-files | while read file;\
-  do git log -n 1\
-    --pretty="%aI  [%h]:$file     (%an)" -- $file; \
+
+
+  git ls-files | while read file
+  do
+    git log -n 1 --pretty="%aI  `printf "%-43s" [%h]:$file`  (%an)"
   done
+
+  #git ls-files | while read file;\
+  #do git log -n 1\
+  #  --pretty="%aI  [%h]:$file %5s (%an)" -- $file; \
+  #done
 
 
   fi
