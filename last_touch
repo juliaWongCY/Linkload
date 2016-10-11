@@ -24,7 +24,10 @@ path="$1"
 
 if [ "$#" -eq 1 ]
 then
-  if [ ! -d "$path" ]
+  if [ ! -d "$path" ] || [ ! -d .git ]
+
+  # git rev-parse --git-dir
+
   then
     echo "Error: Please enter a correct directory."
     exit -1
@@ -35,11 +38,11 @@ then
   # The %an shows the author
 #  echo "This is a correct Directory."
 
-#  pwd
+  pwd
 
   cd "$(dirname -- "$1")"
 
-#  pwd
+  pwd
 
   git ls-files | while read file;\
   do git log -n 1\
