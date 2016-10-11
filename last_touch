@@ -19,6 +19,7 @@ echo "$git"
 
 fi
 
+
 path="$1"
 
 if [ "$#" -eq 1 ]
@@ -33,7 +34,14 @@ then
   # The %h shows therevision_id
   # The %an shows the author
   echo "This is a correct Directory."
-  cd $1 | git ls-files | while read file;\
+
+  pwd
+
+  cd "$(dirname -- "$1")"
+
+  pwd
+
+  git ls-files | while read file;\
   do git log -n 1\
     --pretty="%aI  [%h]:$file     (%an)" -- $file; \
   done
