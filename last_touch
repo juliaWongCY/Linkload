@@ -8,18 +8,8 @@ then
   exit -1
 fi
 
-
-path="$1"
-
-if [[ $path != .* ]]
+if [[ "$#" -eq 0 ]]
 then
-  echo "Error: Please enter a correct directory."
-  exit -1
-else
-# to print out the last commit, use -n 1
-# The %aI shows the UTC time-stamp
-# The %h shows therevision_id
-# The %an shows the author
 git=`git ls-files | while read file;\
 do git log -n 1\
   --pretty="%aI  [%h]:$file     (%an)" -- $file; \
@@ -27,4 +17,27 @@ done`
 
 echo "$git"
 
+fi
+
+path="$1"
+
+if [[ "$#" -eq 1 ]]
+then
+  if [[ $path != .* ]]
+  then
+    echo "Error: Please enter a correct directory."
+    exit -1
+  else
+  # to print out the last commit, use -n 1
+  # The %aI shows the UTC time-stamp
+  # The %h shows therevision_id
+  # The %an shows the author
+  git=`cd $1 | git ls-files | while read file;\
+  do git log -n 1\
+    --pretty="%aI  [%h]:$file     (%an)" -- $file; \
+  done`
+
+  echo "$git"
+
+  fi
 fi
