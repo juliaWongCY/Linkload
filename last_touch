@@ -14,19 +14,20 @@ fi
 if [ "$#" -eq 0 ]
 then
 
-git ls-files | while read file
+for file in `git ls-files`
 do
 
+
   len=${#file}
-  #len=`echo "$file" | gawk -F\/ '{printf "%s", $NF}' | wc -c`
   if [ $len -gt $size ]
-  then size=$len
-  #echo $size
+  then
+    size=$len
   fi
-
-  #size=$[${#file} + 1]
-
-  git log -n 1 --pretty="%aI  `printf "%-s" [%h]:$file`  (%an)"
+done
+git ls-files | while read file
+do
+  #echo 'hi'$size
+  git log -n 1 --abbrev=5 --pretty="`printf "%s [%s]: %-${size}s (%s)" %aI %h $file %an`"
 done
 
 fi
@@ -60,6 +61,7 @@ then
 
   git ls-files | while read file
   do
+
     git log -n 1 --pretty="%aI  `printf "%-43s" [%h]:$file`  (%an)"
   done
 
