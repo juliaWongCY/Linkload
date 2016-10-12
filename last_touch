@@ -63,7 +63,7 @@ then
     git log -n 1 --pretty="%aI  `printf "%-43s" [%h]:$file`  (%an)"
   done
 
-  if [git ls-files --others =~ $file]
+  if [ git ls-files --others =~ $file ]
   then
     echo "[***not under version control***]: $file"
   fi
