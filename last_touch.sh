@@ -84,12 +84,11 @@ then
 
   printf "%s [%s]: %-${size}s (%s)\n" "$date" "$revision_id" $file "$author"
 
-
   for files in `git ls-files --others`
   do
     if [ $files == $file ]
     then
-      echo "[***not under version control***]: $file"
+      echo "[***not under version control***]: $files"
     fi
   done
 
