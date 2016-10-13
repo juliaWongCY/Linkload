@@ -47,7 +47,7 @@ then
 
   printf "%s [%s]: %-${maxLen}s (%s)\n" "$date" "$revision_id" $file "$author"
 
-done | sort -k1 -r
+done | sort -k 1,1 -r -k 3,3
 
   for files in `git ls-files --others`
   do
