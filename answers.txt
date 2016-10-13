@@ -11,24 +11,23 @@ How big (how many bytes) is the program code section of the file hello.o?
 Explain how you arrived at your answer, including any mathematical conversions you had to make.
 
 Answer:
-In hexadecimal, it can represent number from 0 to 15, ie 16 numbers. This means that one hexadecimal digit represents 4 bits (2^4 = 16). Inside the file hello.o, using the objdump utility with the '--disassemble' option, we could visualize the assembler mnemonics that contain instructions.
+For hexadecimal, it can represent numbers from 0 to 15, ie 16 numbers. This means that one hexadecimal digit represents 4 bits (2^4 = 16). Inside the file hello.o, using the objdump utility with the '--disassemble' option, we could visualize the assembler mnemonics with instructions.
 As one hexadecimal digit represents 4 bits, a pair represents 8 bits, i.e. 1 byte.
 For each 'mov' instruction, it contains 6 pairs of hexadecimal digits. Therefore 6 bytes each.
 While for each 'int' instruction, it contains 2 pairs of hexadeciaml digits. Hence 2 bytes each.
-There are total 6 'mov' and 2 'int' instructions in hello.o. Therefore the program code section of the file hello.o is 6*6 + 2*2 = 40 bytes.
+There are total 6 'mov' and 2 'int' instructions in hello.o. Therefore the program code section of the file hello.o is 5*6 + 2*2 = 34 bytes.
 
 
 
- 
- 
+
+
 Question 2:
-How many relocation records are there in the file hello.o? 
+How many relocation records are there in the file hello.o?
 Name them and explain how you arrived at your answer.
 
 Answer:
-//TODO:CHECK!!
-Firstly, when using the command 'file hello.o', we can see that hello.o is relocatable. This means that it allows executable to hold the right address after linking all the object files during the link time. 
-The relocation depends on the references made to the relocated offset. There are two types of references: an immediate reference and a lazy reference. In hello.s, it is an immediate reference i.e. the relocation must be determined during the process of initialization. Inside the file hello.s, we used labels '_start' and 'message'. When the assembler is writing the binary code, the address of 'message' is known yet. For a relocatable file, the assembler will write the address of the unknown as '0' and make a relocation record for it. After knowing the address for the label, the linker will generate the right address for the label 'message'.
+Firstly, when using the command 'file hello.o', we can see that hello.o is relocatable. This means that it allows executable to hold the right address after linking all the object files during the link time.
+The relocation depends on the references made to the relocated offset. There are two types of references: an immediate reference and a lazy reference. In hello.s, it is an immediate reference i.e. the relocation must be determined during the process of initialization. Inside the file hello.s, we used labels '_start' and 'message'. When the assembler is writing the binary code, the address of 'message' is not known yet. For a relocatable file, the assembler will write the address of the unknown as '0' and make a relocation record for it. After knowing the address for the label, the linker will generate the right address for the label 'message'.
 Therefore, inside the hello.o file, there is only one relocation record. This can be confirmed using the objdump utility with the '--all-headers' option, showing that there is one relocation record that has an offset of '000000000000000b' with type 'R_X86_64_32' and value 'message'.
 
 
@@ -38,10 +37,9 @@ Therefore, inside the hello.o file, there is only one relocation record. This ca
 
 Question 3:
 How many relocation records are there in the file hello (the result of linking hello.o)?
-Explain how you arrived at your answer. 
+Explain how you arrived at your answer.
 
 Answer:
-//TODO:CHECK!
 There is no relocation record in the file hello (the result of linking hello.o). Due to the fact that after using the linker, the relocation record we had before is solved. The linker has now produced a single file (the executable file) with a fixed starting address.
 This can be confirmed using the objdump utility with '--all-headers' option, no relocatio records are shown.
 
@@ -50,13 +48,13 @@ This can be confirmed using the objdump utility with '--all-headers' option, no 
 
 
 Question 4:
-What happens if you try to link chello.o using ld as you did with hello.o 
+What happens if you try to link chello.o using ld as you did with hello.o
 (that is by running the command: ld -N chello.o -o chello)?
 Explain what has happened and how the nm utility can be used to confirm this.
 
 Answer:
-When we try to link the files, we got undefined reference to 'writeA' and 'exitA'/
-This can be confirmed using the utility nm. 
+When we try to link the files, we got undefined reference to 'writeA' and 'exitA.
+This can be confirmed using the utility nm.
 For chello.o, we can see that 'exitA' and ' WriteA' have undefined type ('U' shown).
 Therefore, when linking the files, it shows that in the function 'main', there's undefined reference to 'writeA' and 'exitA'.
 
@@ -64,9 +62,9 @@ Therefore, when linking the files, it shows that in the function 'main', there's
 
 
 
- 
+
 Question 5:
-The last instruction in hello.s is an exit system call. 
+The last instruction in hello.s is an exit system call.
 What would happen if you assembled, linked and ran this programs with this instruction commented out?
 (Hint: you might want to try this)
 Explain why this happens. Does the program still terminate?
@@ -75,4 +73,5 @@ Answer:
 When we commented the instruction out, the program still print out 'Hello world!' but it resulted in a segmentation fault and the program terminated. This happened because we commented out the exit system call and so we were trying to access memories that we are not supposed to access, resulting a segmentation fault.
 
 
- 
+
+
