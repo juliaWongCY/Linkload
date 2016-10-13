@@ -37,21 +37,23 @@ then
   for file in `git ls-files`
   do
   #Getting the time-stamp
-  date=$(git log -n 1 --pretty=%cI $file)
+  date=$(git log --no-merges -n 1 --pretty=%cI $file)
 
   #Getting the revision id
-  revision_id=$(git log -n 1 --abbrev=5 --pretty=%h $file)
+  revision_id=$(git log --no-merges -n 1 --abbrev=5 --pretty=%h $file)
 
   #Getting the author
-  author=$(git log -n 1 --pretty=%an $file)
+  author=$(git log --no-merges -n 1 --pretty=%an $file)
 
   printf "%s [%s]: %-${maxLen}s (%s)\n" "$date" "$revision_id" $file "$author"
 
+# sorting wwith date in reverse order first then filename in alphabetical order
 done | sort -k 1,1 -r -k 3,3b
 
   for files in `git ls-files --others`
   do
     echo "[***not under version control***]: $files"
+  # Sorting filenames in alphabetical order
   done | sort -k 3,3b
 
 fi
