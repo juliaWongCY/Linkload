@@ -24,7 +24,9 @@ do
     size=$len
   fi
 done
-git ls-files | while read file
+
+for file in `git ls-files`
+#git ls-files | while read file
 do
   #echo 'hi'$size
   git log -n 1 --abbrev=5 --pretty="`printf "%s [%s]: %-${size}s (%s)" %aI %h $file %an`"
@@ -58,11 +60,12 @@ then
   #pwd
 
 
-
-  git ls-files | while read file
+  for file in `git ls-files`
+  #git ls-files | while read file
   do
+  git log -n 1 --abbrev=5 --pretty="`printf "%s [%s]: %-${size}s (%s)" %aI %h $file %an`"
 
-    git log -n 1 --pretty="%aI  `printf "%-43s" [%h]:$file`  (%an)"
+#    git log -n 1 --pretty="%aI  `printf "%-43s" [%h]:$file`  (%an)"
   done
 
   if [ git ls-files --others =~ $file ]
