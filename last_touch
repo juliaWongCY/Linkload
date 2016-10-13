@@ -47,11 +47,11 @@ then
 
   printf "%s [%s]: %-${maxLen}s (%s)\n" "$date" "$revision_id" $file "$author"
 
-  done | sort -n $date
+  done | sort -k1
 
   for files in `git ls-files --others`
   do
     echo "[***not under version control***]: $files"
-  done
-  
+  done | sort -k1
+
 fi
