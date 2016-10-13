@@ -1,9 +1,7 @@
-# edit this file to build your last_touch script as required for question 7.
-
 #!/bin/bash
 
-size=0
 
+# When there more than one argument passed in
 if [ "$#" -gt 1 ]
 then
   echo "Error: Please enter one specific directory."
@@ -11,75 +9,90 @@ then
 fi
 
 
+# When there is only one arh=gument passed in
+size=0
+
 if [ "$#" -eq 0 ]
 then
 
-for file in `git ls-files`
-do
-
+  for file in `git ls-files`
+  do
 
   len=${#file}
-  if [ $len -gt $size ]
-  then
-    size=$len
-  fi
-done
+    if [ $len -gt $size ]
+    then
+      size=$len
+    fi
+  done
 
-for file in `git ls-files`
-#git ls-files | while read file
-do
-  #echo 'hi'$size
-  git log -n 1 --abbrev=5 --pretty="`printf "%s [%s]: %-${size}s (%s)" %aI %h $file %an`"
-done
+  for file in `git ls-files`
+  do
 
+  #Getting the time-stamp
+  date=$(git log -n 1 --pretty=%cI $file)
+
+  #Getting the revision id
+  revision_id=$(git log -n 1 --abbrev=5 --pretty=%h $file)
+
+  #Getting the author
+  author=$(git log -n 1 --pretty=%an $file)
+  #echo $author
+
+printf "%s [%s]: %-${size}s (%s)\n" "$date" "$revision_id" $file "$author"
+
+done
 fi
 
 
+# When there is one argument passing in
+
+# The argument passing in is the correct directory
 path="$1"
 
 if [ "$#" -eq 1 ]
 then
+  # Checking if the argument is a correct git directory
   if [ ! -d "$path" ] || [ ! -d .git ]
-
-  # git rev-parse --git-dir
-
   then
     echo "Error: Please enter a correct directory."
     exit -1
   else
-  # to print out the last commit, use -n 1
-  # The %aI shows the UTC time-stamp
-  # The %h shows therevision_id
-  # The %an shows the author
-  # To pad with spaces and left aligned, we use %-5s
 
-  #pwd
-
+  #Going into the correct directory
   cd "$1"
-  #cd "$(dirname -- "$1")"
-  #pwd
-
-
+  # Finding the longest file name for padding later
   for file in `git ls-files`
-  #git ls-files | while read file
   do
-  git log -n 1 --abbrev=5 --pretty="`printf "%s [%s]: %-${size}s (%s)" %aI %h $file %an`"
-
-#    git log -n 1 --pretty="%aI  `printf "%-43s" [%h]:$file`  (%an)"
+  len=${#file}
+    if [ $len -gt $size ]
+    then
+      size=$len
+    fi
   done
 
-  if [ git ls-files --others =~ $file ]
-  then
-    echo "[***not under version control***]: $file"
-  fi
+  for file in `git ls-files`
+  do
+  #Getting the time-stamp
+  date=$(git log -n 1 --pretty=%cI $file)
 
-  #git ls-files | while read file;\
-  #do git log -n 1\
-  #  --pretty="%aI  [%h]:$file %5s (%an)" -- $file; \
-  #done
+  #Getting the revision id
+  revision_id=$(git log -n 1 --abbrev=5 --pretty=%h $file)
+
+  #Getting the author
+  author=$(git log -n 1 --pretty=%an $file)
+  #echo $author
+
+  printf "%s [%s]: %-${size}s (%s)\n" "$date" "$revision_id" $file "$author"
 
 
+  for files in `git ls-files --others`
+  do
+    if [ $files == $file ]
+    then
+      echo "[***not under version control***]: $file"
+    fi
+  done
+
+  done
   fi
 fi
-
-#path=$(echo $1 | tr "/")"$1"
